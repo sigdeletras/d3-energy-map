@@ -1,47 +1,48 @@
 # Entrada 1
 
-Hace unas semanas comenté en una entrada mi experiencia colaboración en un proyecto de código abierto cuyo objetivo era la consulta de la evolución del proceso de vacunación contra el COVID-19 en España. La aplicación desarrollada por Miguel Durán cuenta un mapa que indica el porcentaje de la vacunación por provincias.
+Hace unas semanas comenté en una entrada mi experiencia de [colaboración en un proyecto de código abierto](http://sigdeletras.com/2021/como-colaborar-en-proyectos-haciendo-pull-requests/) cuyo objetivo era la consulta de la evolución del proceso de vacunación contra el COVID-19 en España. La aplicación desarrollada por Miguel Ángel Durán cuenta un mapa que indica el porcentaje de la vacunación por provincias.
 
-Mi primera idea era contribuir en la mejora de este mapa pero surgieron un par de temas me hicieron cambiar de opinión. En primer lugar, encontré que el apartado de descarga de los datos no funcionaba correctamente. Y por otro lado, al consultar el código comprobé con sorpresa que el mapa estaba hecho con la librería JavaScript D3 de la que soy un total desconocido.
+Mi primera idea era apoyar en la mejora de este mapa, pero surgieron un par cuestiones que me hicieron cambiar de opinión. En primer lugar, encontré que el apartado de descarga de los datos no funcionaba correctamente. Y por otro lado, al consultar el código comprobé con sorpresa que **el mapa estaba hecho con la librería JavaScript D3 de la que soy un total desconocido**.
 
 Esto último, me ha impulsado a dedicarle un tiempo a estudiar y probar las opciones de esta biblioteca que si bien está pensada para producir a partir de datos gráficas estadísticas e infografías muy potentes, permite representar datos geográficos.
 
 ## D3.js y mapas
 
-La biblioteca está pensada para crear objetos de tipo SVG, dentro de elementos HTML a los que se les puede aplicar estilo usando CSS. D3 incorpora un conjunto de funciones JavaScript predefinidas que permite seleccionar elementos del DOM, agregar datos, crear transiciones o añadir efectos dinámicos.
+La biblioteca **D3 facilita la creación de objetos de tipo SVG, dentro de elementos HTML a los que se les puede aplicar estilo usando CSS**. D3 incorpora un conjunto de funciones JavaScript predefinidas que permite seleccionar elementos del DOM, agregar datos, crear transiciones o añadir efectos dinámicos.
 
 ![d3_web](img/d3_web.png)
 
-Con D3 podemos añadir datos en distintos formatos como JSON, CSV, TopoJSON y GeoJSON. Este aspecto lo hace realmente potente ya que si pensamos en la presentación de mapas nos va a permitir trabajar con datos en GeoJSON, el formato más común dentro para aplicaciones de mapas en web.
+Con D3 podemos trabajar con **datos en distintos formatos como JSON, CSV, TopoJSON y GeoJSON**. Este aspecto lo hace realmente potente ya que si pensamos en la presentación de mapas nos va a permitir trabajar con datos en GeoJSON, el formato más común dentro para aplicaciones de mapas en web.
 
-Destaca igualmente, la capacidad de trabajar con múltiples tipos de proyecciones cartográficas (cónica, cilíndrica, Mercator o acimutal) y aplicar elegir el tipo de deformación (equidistante, equivalente o conforme). Esta potencia será de gran utilidad para representar con datos a escala mundial o de país.
+Destaca igualmente, la capacidad de trabajar con **múltiples tipos de proyecciones cartográficas** (cónica, cilíndrica, Mercator o acimutal) y aplicar elegir el tipo de deformación (equidistante, equivalente o conforme). Esta potencia será de gran utilidad para representar con datos a escala mundial o de país.
 
 ![d3_observable_maps](img/d3_observable_maps.png)
 
-Para completar la visión de D3 en uso en el campo de la información espacial añadir las opciones para crear mapas temáticos basados en categorías o clasificaciones (mapas coropléticos) e incluir esquemas de color y leyendas.
+Para completar la visión de D3 en su uso en el campo de la información espacial, la biblioteca **añade las opciones para crear mapas temáticos** basados en categorías o clasificaciones (mapas coropléticos) e incluir esquemas de color y leyendas.
 
 [IMG]
 
 ## Dificultad
 
-Como primera piedra en el camino, debemos tener en cuenta que D3 trabaja con [Gráficos Vectoriales Escalables (del inglés Scalable Vector Graphics) o SVG](https://developer.mozilla.org/en-US/docs/Web/SVG), y que estos son formato en lenguaje XML. Esto requiere tener un conocimiento base sobre lenguaje de marcado, los tipos de elementos gráficos de SVG y el trabajo con atributos.
+Como primera piedra en el camino, debemos tener en cuenta que D3 trabaja con [Gráficos Vectoriales Escalables (del inglés Scalable Vector Graphics) o SVG](https://developer.mozilla.org/en-US/docs/Web/SVG). Esto requiere tener un conocimiento base sobre lenguaje de marcado XML, los tipos de elementos gráficos de SVG y el trabajo con atributos.
 
-Si pensamos que D3 que la programación de datos en mapas se parece algo a las librerías JavaScript más conocidas como Leaflet u OpenLayers vamos por mal camino. D3 trabaja preferente con selectores al estilo de CSS y aplica operadores de forma parecida a JQuery para la manipulación de elementos del DOM.
+Si pensamos que en D3 que la programación de datos en mapas se parece algo a las librerías JavaScript más conocidas como Leaflet u OpenLayers vamos por mal camino. D3 trabaja preferente con selectores al estilo de CSS y aplica operadores de forma parecida a JQuery para la manipulación de elementos del DOM.
 
-Otra dificultad que me he encontrado es la documentación. Hay muchísimos ejemplos para diseño de gráficos e infografías, pero no tantos para diseño de mapas. Además, según he podido comprobar hubo [cambios entre versiones](https://github.com/d3/d3/blob/master/CHANGES.md) en la denominación de las funciones, por lo que hay estar muy atento a la versión de la [API](https://github.com/d3/d3/blob/master/API.md) que se usa en cada ejemplo.
+Otra dificultad que me he encontrado es la documentación. Hay muchísimos ejemplos para diseño de gráficos e infografías, pero no tantos para diseño de mapas. Además, según he podido comprobar hubo [cambios entre versiones](https://github.com/d3/d3/blob/master/CHANGES.md) en la denominación de las funciones, por lo que hay estar muy atento a la versión de la [API](https://github.com/d3/d3/blob/master/API.md) que se usa en cada ejemplo que se use como referencia.
 
 Como recurso principal está la propia [galería de ejemplos la web de D3](https://observablehq.com/@d3/gallery) con un apartado dedicado a mapas. Existe también muchos recursos de D3 en https://bl.ocks.org/
 
 ## Un ejemplo "Mapa de consumo de energía de municipios de Andalucía"
 
-Sin duda la mejor forma de aprender una librería es picando código. Voy a una serie de entradas el código y los recursos usados para hacer un mapa de coropletas que represente el consumo de energía de los municipios de Andalucía en el año 2019. 
+Sin duda la mejor forma de aprender una librería es picando código. Voy a hacer una serie de entradas con el código y los recursos usados para hacer un **mapa de coropletas que represente el consumo de energía de los municipios de Andalucía en el año 2019** con D3. 
 
 Los requisitos de la aplicación son los siguientes:
 
-- Debe tener un título y una cita a la fuente de la información
+- Debe tener un título y una cita a la fuente de la información.
 - El mapa debe representar el consumo total de energía de cada municipio.
+- Se debe reflejar el límite administrativo provincial.
 - Al poner el cursor sobre el municipio se mostrará información del consumo por sectores.
-- Añadir una escala de simbología
+- El mapa debe tener una escala de simbología.
 
 Los datos de consumo y la capa de municipios provienen del Instituto de Estadística y Cartografía de Andalucía. Una vez descargados, he usado QGIS para crear un GeoJSON con la unión de ambos conjuntos de información por su código INE. Para bajar de peso, también he simplificado las geometrías.
 
@@ -54,14 +55,14 @@ Como cualquier librería JavaScript, D3 puede ser añadida directamente desde m 
 ```
 
 Pero ya que nuestro proyecto usará Node y el empaquetador de aplicaciones Parcel, 
-he usado ["Create App"](https://createapp.dev/) para un archivo zip con los recursos m
+he usado ["Create App"](https://createapp.dev/) para obtener un archivo zip con los recursos 
 mínimos como para comenzar una aplicación *front-end*.
 
 ![create_app.png](img/create_app.png)
 
 Descomprimido el archivo, realizaremos la correspondiente instalación con *npm install* .
 
-Podemos instalar módulos D3 de forma independiente. Por ejemplo, el módulo para manejo de datos geográficos y proyecciones es d3-geo. Estoy es muy positivo ya que tras empaquetar la aplicación su peso sería menor. Pero como estamos desarrollando a modo de pruebas y en local, realizamos la instalación de la biblioteca completa para tener disponibles todas sus funciones.
+Podemos instalar módulos D3 de forma independiente. Por ejemplo, el módulo para manejo de datos geográficos y proyecciones es d3-geo. Esto es muy positivo ya que tras empaquetar la aplicación su peso sería menor. Pero como estamos desarrollando a modo de pruebas y en local, realizamos la instalación de la biblioteca completa para tener disponibles todas sus funciones.
 
 ```
 npm install d3
@@ -69,7 +70,7 @@ npm install d3
 
 ## Archivos HTML y CSS
 
-En *src/index.html* crearemos la estructura básica mediante cajas (div) a las que añadiremos clases CSS. Vamos añadiendo reglas con *style.css* y añadimos el archivo en el fichero *main.js*.
+En *src/index.html* crearemos la estructura básica mediante cajas (div) a las que añadiremos clases CSS. Vamos añadiendo reglas en *style.css* y añadimos la lógica en el fichero *main.js*.
 
 La aplicación cuenta ya con el script *npm start* que levanta un servidor de desarrollo integrado. Con este comando, Parcel construye nuestra aplicación añadiendo en la carpeta */dist* todos los archivos necesarios.
 
@@ -153,7 +154,7 @@ municipios.then((data) => {
     });
 });
 ```
-Podemos ir añadiendo elementos al SVG. En las siguientes líneas superponemos una segunda capa con los límites de las provincias andaluzas, en este usando el método [Promise.all](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Promise/all) y pasando un objeto (array) de con el nombre de las capas para que el método itere sobre él.
+Podemos ir añadiendo elementos al SVG. En las siguientes líneas superponemos una segunda capa con los límites de las provincias andaluzas, en este caso usando el método [Promise.all](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Promise/all) y pasando un objeto (array) de con el nombre de las capas para que el método itere sobre él.
 
 ```javascript
 // main.js
@@ -182,6 +183,9 @@ Promise.all([municipios, provincias]).then((data) => {
     .attr("stroke-width", "0.7px");
 });
 ```
+
+El resultado final es el siguiente.
+
 ![mapa01_provinces.png](img/mapa01_provinces.png)
 
 # Próximos pasos
