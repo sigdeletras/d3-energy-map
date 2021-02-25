@@ -42,7 +42,7 @@ Los requisitos de la aplicación son los siguientes:
 - El mapa debe representar el consumo total de energía de cada municipio.
 - Al poner el cursor sobre el municipio se mostrará infomación del consumo por sectores.
 
-Los datos de consumo y la capa de municipios provienen del Instituto de Estadística y Cartografía de Andalucía. Una vez descargados, he usado QGIS para crear un geoJSON con la unión de ambos conjuntos de información por su código INE.
+Los datos de consumo y la capa de municipios provienen del Instituto de Estadística y Cartografía de Andalucía. Una vez descargados, he usado QGIS para crear un geoJSON con la unión de ambos conjuntos de información por su código INE. Para bajar de peso, también he simplificado las geometrías.
 
 ## Estructura del proyecto
 
@@ -53,26 +53,24 @@ Como cualquier librería JavaScript, D3 puede ser añadida directamente desde m 
 ```
 
 Pero ya que nuestro proyecto usará Node y el empaquedador de aplicaciones Parcel, 
-he usado la web ["Create App"](https://createapp.dev/) que genera un archivo zip con los recursos básicos como para comenzar una aplicación.
+he usado ["Create App"](https://createapp.dev/) para un archivo zip con los recursos m
+mínimos como para comenzar una aplicación *front-end*.
 
 ![create_app.png](img/create_app.png)
 
-Descomprimido el archivo, realizaremos las correspondientes instalaciones con *npm install* y añadimos la biblioteca D3.
+Descomprimido el archivo, realizaremos la correspondiente instalación con *npm install* .
+
+Podemos instalar módulos D3 de forma independiente. Por ejemplo, el módulo para manejo de datos geográficos y proyecciones es d3-geo. Estoy es muy positivo ya que tras empaquetar la aplicación su peso sería menor. Pero como estamos desarrollando a modo de pruebas y en local, realizamos la instalación de la biblioteca completa para tener disponibles todas sus funciones.
 
 ```
 npm install d3
 ```
-Comentar que podemos instalar módulo D3 de forma independiente. Por ejemplo, el módulo para manejo de datos geográficos y proyecciones es d3-geo.
-
-```
-npm install d3-geo
-```
 
 ## Archivos HTML y CSS
 
-En src/index.html crearemos la estructura básica mediente cajas a las que añadiremos clases CSS.Vamos añadiendo reglas con style.css y añadimos el archivo en el fichero main.js.
+En *src/index.html* crearemos la estructura básica mediente cajas (div) a las que añadiremos clases CSS. Vamos añadiendo reglas con *style.css* y añadimos el archivo en el fichero *main.js*.
 
-La aplicación tiene el script *npm start* que levanta un servidor de desarrollo integrado. Con este comando Parcel construye nuestra aplicación añadiendo en la carpeta /dist todos los archivos necesarios.
+La aplicación cuenta ya con el script *npm start* que levanta un servidor de desarrollo integrado. Con este comando, Parcel construye nuestra aplicación añadiendo en la carpeta */dist* todos los archivos necesarios.
 
 ![01_npm_start](img/01_npm_start.png)
 
@@ -80,15 +78,9 @@ El resultado es el siguiente:
 
 ![01_html.png](img/01_html.png)
  
-## Añadiendo archivo GeoJSON con D3
+## Añadiendo archivo un GeoJSON con D3
 
-Ya tenemos todo preparado para añadir nuestra información geográfica usando D3.
-
-Lo primero es importar la librería D3 dentro del archivo *main.js*
-
-En las versiones más recientes D3 está organizao por módulos por lo que también podemos cargar solo aquellas parte de la librería que nos interesa.
-
-Importamos también el archivo geojson que hemos alamacenado en la carpeta src/data.
+Ya tenemos todo preparado para añadir nuestra información geográfica usando D3. Lo primero es importar la librería D3 dentro del archivo *main.js*. Importamos también el archivo geojson que hemos alamacenado en la carpeta *src/data*.
 
 ```javascript
 // main.js
@@ -98,7 +90,7 @@ import municipiosandalucia from "./data/municipios_energia2019.geojson";
 
 ```
 
-Seleccionamos el elmento HTML, en este caso el div con el div con id map y añadimos el objeto SVG dándole un tamaño mediante el atributo viewBox.
+Seleccionamos el elmento HTML, en este caso el div con el id *map* y añadimos el objeto SVG dándole un tamaño mediante el atributo [viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox) añadiendo las variables de anchura y altura.
 
 ```javascript
 // main.js
@@ -112,7 +104,7 @@ const svg = d3
   .attr("viewBox", [0, 0, width, height]);
 
 ```
-Como comentamosm trabjaremos con proyecciones geográficas para poder presentar el geoJSON. Gracias a estas funciones podremos representar datos en un plano.  En una variable almacenamos el tipo de proyección que vamos a usar Usamos, definimos escala, las coordenadas del centro y traslación.
+Como comentamos, trabjaremos con proyecciones geográficas para poder presentar el geoJSON. Gracias a estas funciones podremos representar datos en un plano.  En la variable *projection* almacenamos el tipo de proyección que vamos a usar, definimos escala, las coordenadas del centro y translación.
 
 ```javascript
 // main.js
@@ -123,7 +115,7 @@ const projection = d3
   .center([-4.556, 37.333])
   .translate([width / 2, height / 2]);
 ```
-Vamos a continuación a crear un elemento SVG de forma compleja ([path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)). Pero como nuestros datos son geográficos, el elemento será un geoPath al que pasamos la proyección definida anteriormente.
+Vamos a continuación a crear un elemento SVG de forma compleja ([path](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)). Pero como nuestros datos son geográficos, el elemento será un *geoPath* al que pasamos la proyección definida anteriormente.
 
 ```javascript
 // main.js
@@ -133,14 +125,15 @@ const geopath = d3.geoPath(projection);
 
 ![path.png](img/path.png)
 
-La función d3.json() se utiliza para recuperar el archivo JSON.
+La función *d3.json()* se utiliza para recuperar el archivo geoJSON.
 
 ```javascript
 // main.js
 ...
 const municipios = d3.json(municipiosandalucia);
 ```
-Para terminar, usando una llamada asíncrona, añadimos al SVG los datos.
+
+Para terminar, añadimos al SVG los datos usando una llamada asíncrona.
 
 ```javascript
 // main.js
@@ -159,7 +152,7 @@ municipios.then((data) => {
     });
 });
 ```
-Podemos ir añadiendo elementos al SVG. En las siguientes líneas superponemos una segunda capa con los límites de las provincias andaluzas, en este usando una Promise.all y pasando un arreglo (array) de con el nombre de las capas.
+Podemos ir añadiendo elementos al SVG. En las siguientes líneas superponemos una segunda capa con los límites de las provincias andaluzas, en este usando el método [Promise.all](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Promise/all) y pasando un objeto (array) de con el nombre de las capas para que el método itere sobre él.
 
 ```javascript
 // main.js

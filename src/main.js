@@ -2,8 +2,8 @@ import "./style.css";
 
 import * as d3 from "d3";
 
-import municipiosandalucia from "./data/municipios_energia2019_s.geojson";
-import provinces from "./data/provincias_andalucia_s.geojson";
+import municipiosandalucia from "./data/municipios_energia2019.geojson";
+import provinces from "./data/provincias_andalucia.geojson";
 
 const width = 1000;
 const height = 350;
