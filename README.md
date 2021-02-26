@@ -4,7 +4,7 @@ Proyecto de desarrollo web de visor de mapas usando la librería D3.js
 
 ## Enlaces a las versiones del visor
 
-- Versión 1. Estructura básica y carga de GeoJSON [http://sigdeletras.com/d3-energy-map/public/v1/index.html]http://sigdeletras.com/d3-energy-map/public/v1/index.html()
+- [Versión 1. Estructura básica y carga de GeoJSON](http://sigdeletras.com/d3-energy-map/public/v1/index.html)
 
 ## Enlaces a las entradas en SIGdeletras.com
 
