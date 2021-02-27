@@ -4,21 +4,21 @@ Vamos a continuar con la serie de entradas dedicadas a la creación visualizacio
 
 Ahora toca usar los atributos de las capas que almacenan el consumo anual de energía eléctrica por municipios de Andalucía en 2019. La información procede del [Sistema de Información Multiterritorial de Andalucía](https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/informe/anual?CodOper=b3_151&idNode=23204) del IECA. Mi objetivo es **crear un mapa donde quede reflejado en agrupaciones que reflejen áreas, en este caso municipios, con un consumo energético anual similar**.
 
-Dentro del ámbito del dieño cartográfico este tipo de representaciones se denomina **mapa de coropletas**, es decir un mapas temático que representan una variable estadística.
+Dentro del ámbito del diseño cartográfico este tipo de representaciones se denomina **mapa de coropletas**, es decir un mapa temático que representan una variable estadística.
 
 Para este tipo de representaciones es importante elegir correctamente el método que vamos a usar para clasificar los datos. Los **métodos intervalo manual, intervalo definido, equivalente, basado en cuantiles, rupturas naturales de Jenks o desviación estándar**. La mayoría de los Sistemas de Información Geográfica cuenta con opciones para ello.
 
 ![02_01_QGIS](img/02_01_QGIS.png)
 
-Usaremos el método de **rupturas naturales** creado por el cartógrafo George F. Jenks. En esta clasificación lass clases se crean de manera que los valores similares se agrupan mejor y se maximizan las diferencias entre las clases. Las rupturas marcan diferencias considerables entre los valores de los datos.
+Usaremos el método de **rupturas naturales** creado por el cartógrafo George F. Jenks. En esta clasificación las clases se crean de manera que los valores similares se agrupan mejor y se maximizan las diferencias entre las clases. Las rupturas marcan diferencias considerables entre los valores de los datos.
 
-## Creando un esquemas de color con D3
+## Creando un esquema de color con D3
 
 Para crear nuestro mapa temático con D3 usamos las escalas. Gracias a este tipo de objetos podremos representar una dimensión de datos abstractos en una representación visual (píxeles). Los valores estarán definidos por un dominio (domain) que es usado como elemento de entrada. Los datos de salida, o representación visual se hace mediante un rango (range). 
 
-Para nuestro proyecto definimos un tipo de escala basada en límites o umbrales (scaleThreshold). El dominio serán los valores de las ruturas naturales, obtenidas con QGIS. Y para el el rango, usaremos las esquemas cromáticas de D3 definiendo a partir de 7 clases.
+Para nuestro proyecto definimos un tipo de escala basada en límites o umbrales (scaleThreshold). El dominio serán los valores de las rupturas naturales, obtenidas con QGIS. Y para el rango, usaremos los esquemas cromáticos de D3 definiendo a partir de 7 clases.
 
-```javascript
+```JavaScript
 //main.js
 ...
 const colorScale = d3
@@ -57,15 +57,15 @@ Promise.all([municipios, provincias]).then((data) => {
 ```
 ![02_02_coropletas.png](img/02_02_coropletas.png)
 
-Gracias a estos cambios ya podemos obtener los primeros análisis de los datos. Vemos que los nunicipios con consumos más elevados son las capitales de Málaga y Sevilla. Tenemos otra categoría con capitales de provincia (Córdoba, Huelva y Granada) y municipios residenciales como Jérez, Marbella o Alcalá de Guadaíra. Se unen a este grupo San Roque, Los Barrios y Palos de la Frontera, importantes polos industriales vinculados con la industria química, petrolera y energética por lo que tienen consumos altos en este sector.
+Gracias a estos cambios ya podemos obtener los primeros análisis de los datos. Vemos que los municipios con consumos más elevados son las capitales de Málaga y Sevilla. Tenemos otra categoría con capitales de provincia (Córdoba, Huelva y Granada) y municipios residenciales como Jerez, Marbella o Alcalá de Guadaíra. Se unen a este grupo San Roque, Los Barrios y Palos de la Frontera, importantes polos industriales vinculados con la industria química, petrolera y energética por lo que tienen consumos altos en este sector.
 
-Como vemos, el valor de un mapa correctamente simbolizado es realmente alto y su análisis puede ayudarnos correctamente a comprender y analizar las variables representadas. 
+Como vemos, el valor de un mapa correctamente simbolizado es en realidad alto y su análisis puede ayudarnos correctamente a comprender y analizar las variables representadas. 
 
 ## Información adicional mediante etiquetas
 
-Mejorado el aspecto visual, podemos completar la información ofrecida al visuario mediante etiquetas.
+Mejorado el aspecto visual, podemos completar la información ofrecida al usuario mediante etiquetas.
 
-Lo primero que haremos es crear una función para que mejore el valor numérico del total. La función redondea a dos decimales y añade comas para difenciar los millares.
+Lo primero que haremos es crear una función para que mejore el valor numérico del total. La función redondea a dos decimales y añade comas para diferenciar los millares.
 
 ```javascript
 //main.js
@@ -96,13 +96,19 @@ Promise.all([municipios, provincias]).then((data) => {
     })
     .append("title")
     .text((d) => {
-      let infoTitle = `${d.properties.municipio} ${roundDecimal(
-        d.properties.total
-      )} Mwh`;
+      let infoTitle = d.properties.municipio;
+
+      if (d.properties.total > 0) {
+        infoTitle += ` ${roundDecimal(d.properties.total)} Mwh `;
+      } else {
+        infoTitle += ` (Sin datos)`;
+      }
+
       return infoTitle;
     });
+...
 ```
-------------------------------------------------
+
 Este sería el resultado final con los nuevos cambios y modificaciones
 
 ![mapa01_provinces.png](img/mapa01_provinces.png)
@@ -115,3 +121,5 @@ Queda yo poco para terminar nuestro proyecto. Espero poder dedicarle un tiempo p
 
 - Repositorio GitHub [https://github.com/sigdeletras/d3-energy-map/](https://github.com/sigdeletras/d3-energy-map/)
 - Página del ["Visor de consumo anual de energía eléctrica de los municipios de Andalucía 2019 v2"](http://sigdeletras.com/d3-energy-map/public/v2/index.html)
+
+![02_v2_final.gif](img/02_v2_final.gif)

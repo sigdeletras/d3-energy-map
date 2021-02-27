@@ -49,9 +49,14 @@ Promise.all([municipios, provincias]).then((data) => {
     })
     .append("title")
     .text((d) => {
-      let infoTitle = `${d.properties.municipio} ${roundDecimal(
-        d.properties.total
-      )} Mwh`;
+      let infoTitle = d.properties.municipio;
+
+      if (d.properties.total > 0) {
+        infoTitle += ` ${roundDecimal(d.properties.total)} Mwh `;
+      } else {
+        infoTitle += ` (Sin datos)`;
+      }
+
       return infoTitle;
     });
   svg
