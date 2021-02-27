@@ -21,8 +21,18 @@ const projection = d3
 
 const geopath = d3.geoPath(projection);
 
+const colorScale = d3
+  .scaleThreshold()
+  .domain([0.1, 45000, 175000, 575000, 130, 1300000, 2500000])
+  .range(d3.schemePuBuGn[7]);
+
 const municipios = d3.json(municipiosandalucia);
 const provincias = d3.json(provinces);
+
+function roundDecimal(number) {
+  const castString = parseFloat(number).toFixed(2);
+  return Intl.NumberFormat("es-ES").format(castString);
+}
 
 Promise.all([municipios, provincias]).then((data) => {
   svg
@@ -32,10 +42,17 @@ Promise.all([municipios, provincias]).then((data) => {
     .join("path")
     .attr("class", "municipality")
     .attr("d", geopath)
-    .attr("fill", "#23395b")
+    .attr("stroke", "#808080")
+    .attr("stroke-width", "0.1px")
+    .attr("fill", (d) => {
+      return colorScale(d.properties.total);
+    })
     .append("title")
     .text((d) => {
-      return d.properties.total;
+      let infoTitle = `${d.properties.municipio} ${roundDecimal(
+        d.properties.total
+      )} Mwh`;
+      return infoTitle;
     });
   svg
     .append("g")
@@ -46,5 +63,5 @@ Promise.all([municipios, provincias]).then((data) => {
     .attr("d", geopath)
     .attr("fill", "none")
     .attr("stroke", "#FFF")
-    .attr("stroke-width", "0.7px");
+    .attr("stroke-width", "0.8px");
 });

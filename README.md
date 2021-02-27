@@ -44,7 +44,8 @@ Proyecto de desarrollo web de visor de mapas usando la librería D3.js
 - Maps Made Easy with D3 | Pluralsight https://www.pluralsight.com/guides/maps-made-easy-with-d3
 - A Map to Perfection: Using D3.js to Make Beautiful Web Maps https://www.toptal.com/javascript/a-map-to-perfection-using-d3-js-to-make-beautiful-web-maps
   
-## Coropletas
+## Coropletas y D3
+- Mapas de coropletas - Una guía para la clasificación de datos https://acolita.com/mapas-coropletas-guia-clasificacion-datos/
 - Choropleth map | the D3 Graph Gallery https://www.d3-graph-gallery.com/choropleth
 - Basic choropleth map in d3.js https://www.d3-graph-gallery.com/graph/choropleth_basic.html
 
@@ -52,6 +53,11 @@ Proyecto de desarrollo web de visor de mapas usando la librería D3.js
 - Color Legend / D3 / Observable https://observablehq.com/@d3/color-legend
 - d3 SVG Legend (v4) https://d3-legend.susielu.com
 
+## Escalas
+- Escalas — d3-scale https://d3-spanish.readthedocs.io/es/latest/basico/escalas.html
+- Tutorial de D3 en Español. Escalas http://gcoch.github.io/D3-tutorial/escalas.html
+- Quantile, Quantize and Threshold scales https://observablehq.com/@d3/quantile-quantize-and-threshold-scales
+- Escalas cromáticas https://github.com/d3/d3-scale-chromatic
 ## Ejemplos
 - d3-geo bl.ocksplorer.org https://bl.ocksplorer.org/#/search/d3.geo 
 - D3 Mouse Events http://bl.ocks.org/WilliamQLiu/76ae20060e19bf42d774
