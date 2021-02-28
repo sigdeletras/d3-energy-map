@@ -36,7 +36,6 @@ function roundDecimal(number) {
 
 Promise.all([municipios, provincias]).then((data) => {
   let all_municipios = data[0].features;
-
   let filter_municipios = all_municipios.filter((m) => m.properties.total > 0);
   let filter_nodata_municipios = all_municipios.filter(
     (m) => m.properties.total == 0

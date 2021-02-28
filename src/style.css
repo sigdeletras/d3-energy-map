@@ -58,4 +58,22 @@ a:active {
   text-decoration: underline;
 }
 
+.municipality {
+  cursor: pointer;
+}
 
+.municipality:hover {
+  stroke: red;
+  stroke-width: 2px;
+  size: 3em;
+}
+
+.municipality_nodata {
+  cursor: pointer;
+}
+
+.municipality_nodata:hover {
+  stroke: red;
+  stroke-width: 2px;
+  size: 3em;
+}
