@@ -5,10 +5,12 @@ Proyecto de desarrollo web de visor de mapas usando la librería D3.js
 ## Enlaces a las versiones del visor
 
 - [Versión 1. Estructura básica y carga de GeoJSON](http://sigdeletras.com/d3-energy-map/public/v1/index.html)
+- [Versión 2. Mapa de coropletas por consumo residencial](http://sigdeletras.com/d3-energy-map/public/v2/)
 
 ## Enlaces a las entradas en SIGdeletras.com
 
 - [Desarrollo web de visor de mapas con la librería D3](http://sigdeletras.com/2021/desarrollo-web-de-visor-de-mapas-con-la-libreria-d3/) 
+- [Mapa de coropletas con D3](http://sigdeletras.com/2021/mapa-de-coropletas-con-d3/) 
 
 ## Recursos D3
 
